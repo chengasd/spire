@@ -203,8 +203,15 @@ func TestEndpoints(t *testing.T) {
 
 			tt.do(t, conn)
 
-			spiretest.AssertLogs(t, hook.AllEntries(), append([]spiretest.LogEntry{
+			spiretest.AssertLogsAnyOrder(t, hook.AllEntries(), append([]spiretest.LogEntry{
 				{
+					Level:   logrus.InfoLevel,
+					Message: "Starting Agent APIs",
+					Data: logrus.Fields{
+						"address": "127.0.0.1:8082",
+						"network": "tcp",
+					},
+				}, {
 					Level:   logrus.InfoLevel,
 					Message: "Starting Workload and SDS APIs",
 					Data: logrus.Fields{
